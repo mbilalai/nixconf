@@ -95,10 +95,9 @@
       };
     };
 
-    **# 3. NEW: Home Manager Modules (Shared User Configs)**
-    **homeModules = {**
-    ** common = import ./home/common/default.nix { inherit inputs; };**
-    **};**
+   homeModules = {
+     common = import ./home/common/default.nix { inherit inputs; };
+    };
 
     # Optional: Set a default formatter for all Nix files
     formatter = nixpkgs.lib.defaultFormatter;
