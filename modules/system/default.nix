@@ -25,4 +25,5 @@
   ];
 
   hardware.bluetooth.enable = true; #
+  programs.fish.enable = true;
 }
