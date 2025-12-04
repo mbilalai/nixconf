@@ -109,7 +109,11 @@
 =======
 
    homeModules = {
-     common = import ./home/common/default.nix { inherit inputs; };
+     common = { config, lib, pkgs, ...}:
+       import ./home/common/default.nix {
+         inherit config lib pkgs;
+         inherit inputs;
+       };
     };
 >>>>>>> c01a5f1 (expose homemodules in flake outputs)
 
