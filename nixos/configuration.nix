@@ -129,6 +129,7 @@
      zellij
      zed-editor
      helix
+     evil-helix
      zoxide
      neofetch
      fish
