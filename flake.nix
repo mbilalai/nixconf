@@ -1,10 +1,14 @@
 {
-  description = "simple modular Nix Configs";
+  description = "Modular, Reproducible, and Cross-Platform Nix Configs";
 
   inputs = {
+    # 1. Core Nixpkgs
+    # Using stable for OS components
     nixpkgs.url = "github:nixos/nixpkgs/nixos-25.05";
+    # Use an unstable version for up-to-date applications and packages
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
 
+    # 2. Home Manager (for user-level config)
     home-manager = {
       url = "github:nix-community/home-manager/release-25.05";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -21,11 +25,10 @@
   let
     # Define systems for reuse
     x86_64-linux = "x86_64-linux";
-    aarch64-darwin = "aarch64-darwin"; 
-    # x86_64-darwin = "x86_64-darwin";
+    aarch64-darwin = "aarch64-darwin";
 
     # Define the primary user and hostname constants
-    username = "muhabi";
+    username = "alpha";
     hostname_alpha = "alpha";
     hostname_macbook = "macbook";
 
@@ -91,6 +94,11 @@
         ];
       };
     };
+
+    **# 3. NEW: Home Manager Modules (Shared User Configs)**
+    **homeModules = {**
+    ** common = import ./home/common/default.nix { inherit inputs; };**
+    **};**
 
     # Optional: Set a default formatter for all Nix files
     formatter = nixpkgs.lib.defaultFormatter;
