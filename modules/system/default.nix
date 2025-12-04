@@ -3,7 +3,7 @@
 
 {
   nix.settings.experimental-features = [ "nix-command" "flakes" "pipe-operators" ]; #
-  # nixpkgs.config.allowUnfree = true; # Removed: now handled by mkPkgs in flake.nix
+  nixpkgs.config.allowUnfree = true; # Removed: now handled by mkPkgs in flake.nix
 
   boot.loader.systemd-boot.enable = true; #
   boot.loader.efi.canTouchEfiVariables = true; #
