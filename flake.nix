@@ -94,7 +94,7 @@
         ];
       };
     };
-
+    
    homeModules = {
      common = { config, lib, pkgs, ...}:
        import ./home/common/default.nix {
@@ -102,6 +102,9 @@
          inherit inputs;
        };
     };
+    
+    homeModules = {
+     common = import ./home/common/default.nix { inherit inputs; };
 
     # Optional: Set a default formatter for all Nix files
     formatter = nixpkgs.lib.defaultFormatter;
