@@ -6,4 +6,5 @@
     ./git.nix
     # Add other shared user configs here (e.g., ./zsh.nix, ./nvim.nix)
   ];
+  programs.fish.enable = true;
 }
