@@ -37,6 +37,6 @@
       inputs.self.homeModules.common # Import all shared user settings
     ];
     # Home Manager needs its own state version
-    home.stateVersion = "23.11"; # Should match the home-manager input
+    home.stateVersion = "25.05"; # Should match the home-manager input
   };
 }
