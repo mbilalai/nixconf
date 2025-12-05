@@ -34,5 +34,6 @@
     atuin
     starship
     fastfetch
+    rustup
   ];
 }
