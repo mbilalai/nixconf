@@ -28,6 +28,7 @@
     zoxide
     neofetch
     fish
+    nushell
     yazi
     jujutsu
     atuin
