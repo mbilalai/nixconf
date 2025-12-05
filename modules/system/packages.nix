@@ -24,6 +24,7 @@
     qbittorrent
     syncthing
     openssh
+    discord
     # Shell Utilities
     zoxide
     neofetch
