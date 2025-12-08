@@ -20,8 +20,11 @@
   services.tailscale.enable = true; #
 
   # 5. VirtualBox (Host-specific)
-  virtualisation.virtualbox.host.enable = true; #
-  users.extraGroups.vboxusers.members = [ username ]; # Users with access to VirtualBox
+   virtualisation.virtualbox.host.enable = true; #
+   users.extraGroups.vboxusers.members = [ username ]; # Users with access to VirtualBox
+
+   virtualisation.docker.enable = true;
+
 
   # 6. User Definition (System-level)
   # Defines the user account on the NixOS system.

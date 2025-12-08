@@ -25,6 +25,7 @@
     syncthing
     openssh
     discord
+    docker
     # Shell Utilities
     zoxide
     neofetch
