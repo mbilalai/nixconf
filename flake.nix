@@ -94,7 +94,6 @@
         ];
       };
     };
-<<<<<<< HEAD
     
    homeModules = {
      common = { config, lib, pkgs, ...}:
@@ -106,7 +105,6 @@
     
     homeModules = {
      common = import ./home/common/default.nix { inherit inputs; };
-=======
 
    homeModules = {
      common = { config, lib, pkgs, ...}:
@@ -115,7 +113,7 @@
          inherit inputs;
        };
     };
->>>>>>> c01a5f1 (expose homemodules in flake outputs)
+# >>>>>>> c01a5f1 (expose homemodules in flake outputs)
 
     # Optional: Set a default formatter for all Nix files
     formatter = nixpkgs.lib.defaultFormatter;
