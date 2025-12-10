@@ -102,16 +102,7 @@
          inherit inputs;
        };
     };
-
-    homeModules = {
-     common = { config, lib, pkgs, ...}:
-       import ./home/common/default.nix {
-         inherit config lib pkgs;
-         inherit inputs;
-       };
-    };
-# >>>>>>> c01a5f1 (expose homemodules in flake outputs)
-
+     
     # Optional: Set a default formatter for all Nix files
     formatter = nixpkgs.lib.defaultFormatter;
   };
