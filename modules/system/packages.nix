@@ -26,6 +26,7 @@
     openssh
     discord
     docker
+    nur.repos.Ev357.helium
     # Shell Utilities
     zoxide
     neofetch

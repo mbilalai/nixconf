@@ -3,54 +3,57 @@
 
   inputs = {
     # 1. Core Nixpkgs
-    # Using stable for OS components
     nixpkgs.url = "github:nixos/nixpkgs/nixos-25.05";
-    # Use an unstable version for up-to-date applications and packages
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
 
-    # 2. Home Manager (for user-level config)
+    # 2. Home Manager
     home-manager = {
       url = "github:nix-community/home-manager/release-25.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # 3. nix-darwin (for macOS system configuration)
+    # 3. nix-darwin
     darwin = {
       url = "github:lnl7/nix-darwin";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    # 4. NUR (Nix User Repository)
+    nur.url = "github:nix-community/NUR";
   };
 
-  outputs = { self, nixpkgs, home-manager, darwin, ... } @ inputs:
+  outputs = { self, nixpkgs, home-manager, darwin, nur, ... } @ inputs:
   let
-    # Define systems for reuse
+    # Define systems
     x86_64-linux = "x86_64-linux";
     aarch64-darwin = "aarch64-darwin";
 
-    # Define the primary user and hostname constants
+    # User / host constants
     username = "alpha";
     hostname_alpha = "alpha";
     hostname_macbook = "macbook";
 
-    # Helper function to import a pkgs set with unstable overlay and unfree packages enabled
+    # Helper function to import pkgs with overlays
     mkPkgs = system:
       import nixpkgs {
         inherit system;
-        config = {
-          allowUnfree = true;
-          # Overlay to access unstable packages via 'pkgs.unstable'
-          overlays = [
-            (final: prev: {
-              unstable = import inputs.nixpkgs-unstable {
-                inherit system;
-                config.allowUnfree = true;
-              };
-            })
-          ];
-        };
+        config.allowUnfree = true;
+
+        overlays = [
+          # Unstable packages under pkgs.unstable
+          (final: prev: {
+            unstable = import inputs.nixpkgs-unstable {
+              inherit system;
+              config.allowUnfree = true;
+            };
+          })
+
+          # NUR overlay
+          nur.overlay
+        ];
       };
 
-    # Arguments passed to all modules (e.g., username, inputs)
+    # Arguments passed to all modules
     specialArgs = {
       inherit inputs username;
       pkgs-stable = mkPkgs x86_64-linux;
@@ -65,15 +68,12 @@
         inherit specialArgs;
 
         modules = [
-          # Import the Host-Specific configuration (including hardware-configuration.nix)
           ./hosts/${hostname_alpha}/configuration.nix
 
-          # Import all reusable NixOS modules
           ./modules/system/default.nix
           ./modules/desktop/gdm-cosmic.nix
           ./modules/system/packages.nix
 
-          # Enable Home Manager as a NixOS module
           home-manager.nixosModules.home-manager
         ];
       };
@@ -86,24 +86,22 @@
         inherit specialArgs;
 
         modules = [
-          # Import the Host-Specific configuration for the Mac
           ./hosts/${hostname_macbook}/default.nix
-
-          # Enable Home Manager as a nix-darwin module
           home-manager.darwinModules.home-manager
         ];
       };
     };
-    
-   homeModules = {
-     common = { config, lib, pkgs, ...}:
-       import ./home/common/default.nix {
-         inherit config lib pkgs;
-         inherit inputs;
-       };
+
+    # 3. Home Manager modules
+    homeModules = {
+      common = { config, lib, pkgs, ... }:
+        import ./home/common/default.nix {
+          inherit config lib pkgs inputs;
+        };
     };
-     
-    # Optional: Set a default formatter for all Nix files
+
+    # Formatter
     formatter = nixpkgs.lib.defaultFormatter;
   };
 }
+
