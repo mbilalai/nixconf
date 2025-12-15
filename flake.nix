@@ -49,7 +49,7 @@
           })
 
           # NUR overlay
-          nur.overlay
+          nur.overlay.default
         ];
       };
 
@@ -68,6 +68,10 @@
         inherit specialArgs;
 
         modules = [
+	  ({ ... }: {
+	    nixpkgs.pkgs = mkPkgs x86_64-linux;
+	  })
+
           ./hosts/${hostname_alpha}/configuration.nix
 
           ./modules/system/default.nix
