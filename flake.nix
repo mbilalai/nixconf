@@ -49,8 +49,8 @@
           })
 
           # NUR overlay
-          nur.overlay.default
-        ];
+        ]  ++ [ nur.overlays.default ];
+        
       };
 
     # Arguments passed to all modules
