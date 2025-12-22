@@ -7,6 +7,7 @@
     vim
     helix
     zed-editor
+    claude-code
     # Browsers and Utils
     wget
     git
