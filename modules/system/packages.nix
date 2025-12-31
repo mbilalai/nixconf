@@ -27,6 +27,7 @@
     openssh
     discord
     docker
+    mujoco
     pkgs.nur.repos.Ev357.helium
     # Shell Utilities
     zoxide
