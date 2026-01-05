@@ -26,4 +26,11 @@
 
   hardware.bluetooth.enable = true; #
   programs.fish.enable = true;
+  
+  # Enable gnome-keyring for authentication support (needed for Zed sign-in)
+  services.gnome.gnome-keyring.enable = true;
+  security.pam.services.gdm.enableGnomeKeyring = true;
+  
+  # Enable dbus for applications
+  services.dbus.enable = true;
 }

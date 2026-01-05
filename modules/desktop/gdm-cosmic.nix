@@ -1,25 +1,57 @@
 { config, pkgs, ... }:
 
 {
-  # 1. X Server and Display
-  services.xserver.enable = true; #
-  services.xserver.displayManager.gdm.enable = true; #
-  services.desktopManager.cosmic.enable = true; #
+  # Enable COSMIC Desktop Environment (Stable 1.0)
+  services.desktopManager.cosmic.enable = true;
+  services.displayManager.cosmic-greeter.enable = true;
+  
+  # Use COSMIC's native display manager instead of GDM for better integration
+  services.xserver.enable = false;  # Disable X server as COSMIC is Wayland-only
+  services.xserver.displayManager.gdm.enable = false;
 
-  # 2. XDG Portal
-  xdg.portal.enable = true; #
-  xdg.portal.extraPortals = [ pkgs.xdg-desktop-portal-gtk ]; #
+  # 2. XDG Portal with COSMIC support
+  xdg.portal.enable = true;
+  xdg.portal.extraPortals = with pkgs; [ 
+    xdg-desktop-portal-cosmic  # COSMIC-specific portal for better integration
+    xdg-desktop-portal-gtk     # Fallback for compatibility
+  ];
+  xdg.portal.config.cosmic.default = ["cosmic" "gtk"];
 
   # 3. Fingerprint Settings
-  services.fprintd.enable = true; #
-  services.fprintd.tod.enable = true; #
-  services.fprintd.tod.driver = pkgs.libfprint-2-tod1-goodix; #
-  security.pam.services.gdm.fprintAuth = true; #
-  security.pam.services.gdm-password.fprintAuth = true; #
+  services.fprintd.enable = true;
+  services.fprintd.tod.enable = true;
+  services.fprintd.tod.driver = pkgs.libfprint-2-tod1-goodix;
+  security.pam.services.cosmic-greeter.fprintAuth = true;  # COSMIC greeter support
 
-  # 4. Session Environment Variables
+  # 4. COSMIC-specific Environment Variables
   environment.sessionVariables = {
-    WLR_NO_HARDWARE_CURSORS = "1"; #
-    NIXOS_OZONE_WL = "1"; #
+    # Wayland optimization
+    WLR_NO_HARDWARE_CURSORS = "1";
+    NIXOS_OZONE_WL = "1";
+    
+    # COSMIC-specific optimizations
+    COSMIC_DATA_CONTROL_ENABLED = "1";      # Enable data control protocol
+    COSMIC_DISABLE_DIRECT_SCANOUT = "0";    # Enable direct scanout for better performance
+    
+    # Better application compatibility
+    QT_QPA_PLATFORM = "wayland;xcb";        # Qt applications prefer Wayland
+    GDK_BACKEND = "wayland,x11";            # GTK applications prefer Wayland
+    SDL_VIDEODRIVER = "wayland";            # SDL applications use Wayland
+    _JAVA_AWT_WM_NONREPARENTING = "1";      # Fix Java applications
   };
+
+  # 5. Additional COSMIC Applications (optional but recommended)
+  environment.systemPackages = with pkgs; [
+    cosmic-files        # COSMIC file manager
+    cosmic-edit         # COSMIC text editor  
+    cosmic-term         # COSMIC terminal
+    cosmic-settings     # COSMIC settings app
+    cosmic-applibrary   # COSMIC app launcher
+    cosmic-wallpapers   # COSMIC wallpapers
+    cosmic-icons        # COSMIC icon theme
+  ];
+
+  # 6. Hardware acceleration for better graphics performance
+  hardware.graphics.enable = true;
+  hardware.graphics.enable32Bit = true;
 }

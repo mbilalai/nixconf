@@ -20,9 +20,15 @@
 
     # 4. NUR (Nix User Repository)
     nur.url = "github:nix-community/NUR";
+
+    # 5. COSMIC Desktop Environment (Stable Release)
+    nixos-cosmic = {
+      url = "github:lilyinstarlight/nixos-cosmic";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
   };
 
-  outputs = { self, nixpkgs, home-manager, darwin, nur, ... } @ inputs:
+  outputs = { self, nixpkgs, home-manager, darwin, nur, nixos-cosmic, ... } @ inputs:
   let
     # Define systems
     x86_64-linux = "x86_64-linux";
@@ -72,6 +78,9 @@
 	    nixpkgs.pkgs = mkPkgs x86_64-linux;
 	  })
 
+          # COSMIC Desktop Environment (Stable)
+          nixos-cosmic.nixosModules.default
+
           ./hosts/${hostname_alpha}/configuration.nix
 
           ./modules/system/default.nix
@@ -104,8 +113,11 @@
         };
     };
 
-    # Formatter
-    formatter = nixpkgs.lib.defaultFormatter;
+    # Formatters for each system
+    formatter = {
+      ${x86_64-linux} = (mkPkgs x86_64-linux).nixfmt-classic;
+      ${aarch64-darwin} = (mkPkgs aarch64-darwin).nixfmt-classic;
+    };
   };
 }
 
