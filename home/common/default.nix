@@ -5,6 +5,7 @@
     ./packages.nix
     ./git.nix
     ./bash.nix
-    # Add other shared user configs here (e.g., ./zsh.nix, ./nvim.nix)
+    ./zsh.nix
+    # Add other shared user configs here (e.g., ./nvim.nix)
   ];
 }

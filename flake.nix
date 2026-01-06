@@ -5,6 +5,7 @@
     # 1. Core Nixpkgs
     nixpkgs.url = "github:nixos/nixpkgs/nixos-25.05";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixpkgs-darwin.url = "github:nixos/nixpkgs/nixpkgs-unstable"; # For macOS
 
     # 2. Home Manager
     home-manager = {
@@ -12,10 +13,16 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    # Home Manager for darwin
+    home-manager-darwin = {
+      url = "github:nix-community/home-manager";
+      inputs.nixpkgs.follows = "nixpkgs-darwin";
+    };
+
     # 3. nix-darwin
     darwin = {
       url = "github:lnl7/nix-darwin";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs.follows = "nixpkgs-darwin";
     };
 
     # 4. NUR (Nix User Repository)
@@ -23,7 +30,7 @@
 
   };
 
-  outputs = { self, nixpkgs, home-manager, darwin, nur, ... } @ inputs:
+  outputs = { self, nixpkgs, home-manager, home-manager-darwin, darwin, nur, ... } @ inputs:
   let
     # Define systems
     x86_64-linux = "x86_64-linux";
@@ -51,7 +58,19 @@
 
           # NUR overlay
         ]  ++ [ nur.overlays.default ];
-        
+
+      };
+
+    # Helper function for darwin (uses unstable nixpkgs)
+    mkPkgsDarwin = system:
+      import inputs.nixpkgs-darwin {
+        inherit system;
+        config.allowUnfree = true;
+
+        overlays = [
+          # NUR overlay
+          nur.overlays.default
+        ];
       };
 
     # Arguments passed to all modules
@@ -91,8 +110,12 @@
         inherit specialArgs;
 
         modules = [
+	  ({ ... }: {
+	    nixpkgs.pkgs = mkPkgsDarwin aarch64-darwin;
+	  })
+
           ./hosts/${hostname_macbook}/default.nix
-          home-manager.darwinModules.home-manager
+          home-manager-darwin.darwinModules.home-manager
         ];
       };
     };

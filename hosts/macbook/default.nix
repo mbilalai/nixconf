@@ -1,43 +1,88 @@
 { config, lib, pkgs, inputs, username, ... }:
 
+let
+  # Use actual macOS username
+  actualUsername = "mbk";
+in
 {
+  # Import darwin-specific modules
+  imports = [
+    ../../modules/darwin/packages.nix
+    ../../modules/darwin/system.nix
+  ];
+
   # 1. Host-specific Settings for macOS
   networking.computerName = "macbook";
   networking.hostName = "macbook";
 
-  # Automatic garbage collection - delete builds older than 10 days
-  nix.gc = {
-    automatic = true;
-    interval = { Day = 1; };  # Daily cleanup on macOS
-    options = "--delete-older-than 10d";
-  };
-  # Set the macOS user account
-  users.users.${username}.name = username;
-  users.users.${username}.home = "/Users/${username}";
+  # 2. Nix Settings
+  nix = {
+    settings = {
+      experimental-features = [ "nix-command" "flakes" ];
+      trusted-users = [ actualUsername ];
+    };
 
-  # 2. Darwin Settings (Mac equivalent of NixOS services)
-  # Enable the Nix Darwin manual
+    # Automatic garbage collection - delete builds older than 10 days
+    gc = {
+      automatic = true;
+      interval = { Day = 1; };
+      options = "--delete-older-than 10d";
+    };
+
+    # Store optimization
+    optimise.automatic = true;
+  };
+
+  # 3. System primary user (required for homebrew and system defaults)
+  system.primaryUser = actualUsername;
+
+  # 4. User configuration
+  users.users.${actualUsername} = {
+    name = actualUsername;
+    home = "/Users/${actualUsername}";
+    shell = pkgs.zsh; # Use zsh as default shell
+  };
+
+  # 5. Programs
+  programs = {
+    zsh.enable = true; # Enable zsh system-wide
+  };
+
+  # Enable Homebrew integration for GUI apps not in nixpkgs
+  homebrew = {
+    enable = true;
+    onActivation = {
+      cleanup = "zap"; # Uninstall packages not in config
+      autoUpdate = true;
+      upgrade = true;
+    };
+  };
+
+  # 6. Services (nix-daemon is managed automatically by nix-darwin)
+
+  # 7. Documentation
   documentation.enable = true;
 
-  # Enable Homebrew integration (optional)
-  programs.homebrew.enable = true;
+  # 8. Home Manager Integration
+  home-manager = {
+    useGlobalPkgs = true;
+    useUserPackages = true;
+    users.${actualUsername} = {
+      imports = [
+        inputs.self.homeModules.common
+      ];
 
-  # Set the default shell to bash
-  # This makes bash the default login shell.
-  users.users.${username}.shell = pkgs.bash;
-
-  # 3. Home Manager Integration (Points to same user-level configuration)
-  home-manager.users.${username} = {
-    imports = [
-      inputs.self.homeModules.common # Imports packages, git config, etc.
-      # Add macOS-specific home-manager files here if needed
-      # e.g., for setting up applications like alacritty and kitty on macOS
-    ];
-
-    home.stateVersion = "25.05"; # Should match the home-manager input
+      home = {
+        stateVersion = "25.05";
+        # Set sessionVariables
+        sessionVariables = {
+          EDITOR = "hx";
+          VISUAL = "hx";
+        };
+      };
+    };
   };
 
-  # 4. State Version
-  # You must start with a state version, then never change it.
+  # 9. State Version
   system.stateVersion = 4;
 }
