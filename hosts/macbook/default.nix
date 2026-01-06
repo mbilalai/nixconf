@@ -84,5 +84,6 @@ in
   };
 
   # 9. State Version
-  system.stateVersion = 4;
+  # Use version 5 which expects modern GID 350 for nixbld group
+  system.stateVersion = 5;
 }
