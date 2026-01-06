@@ -63,6 +63,11 @@
     openssh
     syncthing
 
+    # Python development (Astral ecosystem)
+    uv      # Fast Python package installer and resolver
+    ruff    # Fast Python linter and formatter
+    ty      # Python type checker from Astral
+
     # SSL/TLS
     cacert
     openssl

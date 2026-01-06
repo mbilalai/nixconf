@@ -62,5 +62,9 @@
     # Media and Graphics
     ffmpeg
     imagemagick
+    # Python Development (Astral ecosystem)
+    uv      # Fast Python package installer and resolver
+    ruff    # Fast Python linter and formatter
+    ty      # Python type checker from Astral
   ];
 }
