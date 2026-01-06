@@ -39,4 +39,11 @@
   
   # Enable dbus for applications
   services.dbus.enable = true;
+
+  # 1Password system authentication integration
+  programs._1password.enable = true;
+  programs._1password-gui = {
+    enable = true;
+    polkitPolicyOwners = [ "alpha" ];  # Allow GUI polkit authentication
+  };
 }

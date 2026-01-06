@@ -22,6 +22,7 @@
     git
     brave
     _1password-gui
+    _1password-cli  # CLI version for better system integration
     # Authentication and Security
     gnome-keyring
     libsecret
