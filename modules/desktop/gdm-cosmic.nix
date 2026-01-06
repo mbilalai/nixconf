@@ -1,7 +1,7 @@
-{ config, pkgs, ... }:
+{ config, pkgs, inputs, ... }:
 
 {
-  # Enable COSMIC Desktop Environment (Stable 1.0)
+  # Enable COSMIC Desktop Environment (Latest Available Version)
   services.desktopManager.cosmic.enable = true;
   services.displayManager.cosmic-greeter.enable = true;
   
@@ -40,13 +40,14 @@
     _JAVA_AWT_WM_NONREPARENTING = "1";      # Fix Java applications
   };
 
-  # 5. Additional COSMIC Applications (optional but recommended)
+  # 5. Additional COSMIC Applications (from stable/unstable packages)
   environment.systemPackages = with pkgs; [
-    cosmic-files        # COSMIC file manager
-    cosmic-edit         # COSMIC text editor  
-    cosmic-term         # COSMIC terminal
-    cosmic-settings     # COSMIC settings app
-    cosmic-applibrary   # COSMIC app launcher
+    # Use unstable packages for latest COSMIC apps when available
+    (inputs.nixpkgs-unstable.legacyPackages.${pkgs.system}.cosmic-files or cosmic-files)
+    (inputs.nixpkgs-unstable.legacyPackages.${pkgs.system}.cosmic-edit or cosmic-edit)
+    (inputs.nixpkgs-unstable.legacyPackages.${pkgs.system}.cosmic-term or cosmic-term)
+    (inputs.nixpkgs-unstable.legacyPackages.${pkgs.system}.cosmic-settings or cosmic-settings)
+    (inputs.nixpkgs-unstable.legacyPackages.${pkgs.system}.cosmic-applibrary or cosmic-applibrary)
     cosmic-wallpapers   # COSMIC wallpapers
     cosmic-icons        # COSMIC icon theme
   ];

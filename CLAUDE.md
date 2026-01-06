@@ -55,12 +55,13 @@ nix fmt
 nix develop
 ```
 
-### COSMIC Desktop Updates
-This configuration uses the `nixos-cosmic` flake for COSMIC 1.0 stable:
-- **Source**: `github:lilyinstarlight/nixos-cosmic`
-- **Cache**: `cosmic.cachix.org` for prebuilt binaries
+### COSMIC Desktop Configuration
+This configuration uses the native NixOS COSMIC support with unstable packages:
+- **Source**: NixOS built-in COSMIC support + nixpkgs-unstable overlay
+- **Version**: Latest available COSMIC packages from unstable channel
 - **Updates**: Run `nix flake update` to get latest COSMIC releases
-- **Features**: Native Wayland, COSMIC Greeter, stable application suite
+- **Features**: Native Wayland, COSMIC Greeter, latest application suite
+- **Benefits**: No third-party flakes, no Rust build warnings
 
 ### Home Manager Operations
 ```bash
@@ -101,10 +102,10 @@ pkgs.unstable.package-name
 ## Platform-Specific Notes
 
 ### NixOS (alpha)
-- **COSMIC DE 1.0 STABLE**: Latest stable release via nixos-cosmic flake
+- **COSMIC DE**: Latest version from nixpkgs-unstable (clean build)
 - **Display setup**: COSMIC Greeter (native), Wayland-only environment
 - **XDG portals**: COSMIC-specific portal with GTK fallback
-- **COSMIC apps**: Complete stable application suite included
+- **COSMIC apps**: Latest applications from unstable channel
 - **Optimizations**: Native Wayland, hardware acceleration, performance tuned
 - **Authentication**: Fingerprint support for COSMIC greeter
 - **Services**: VirtualBox, Docker, Mullvad VPN, and Tailscale
