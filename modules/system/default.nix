@@ -5,6 +5,13 @@
   nix.settings.experimental-features = [ "nix-command" "flakes" "pipe-operators" ]; #
 #  nixpkgs.config.allowUnfree = true; # Removed: now handled by mkPkgs in flake.nix
 
+  # Automatic garbage collection - delete builds older than 10 days
+  nix.gc = {
+    automatic = true;
+    dates = "daily";
+    options = "--delete-older-than 10d";
+  };
+
   boot.loader.systemd-boot.enable = true; #
   boot.loader.efi.canTouchEfiVariables = true; #
 
@@ -25,7 +32,6 @@
   ];
 
   hardware.bluetooth.enable = true; #
-  programs.fish.enable = true;
   
   # Enable gnome-keyring for authentication support (needed for Zed sign-in)
   services.gnome.gnome-keyring.enable = true;

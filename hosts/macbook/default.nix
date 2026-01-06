@@ -4,6 +4,13 @@
   # 1. Host-specific Settings for macOS
   networking.computerName = "macbook";
   networking.hostName = "macbook";
+
+  # Automatic garbage collection - delete builds older than 10 days
+  nix.gc = {
+    automatic = true;
+    interval = { Day = 1; };  # Daily cleanup on macOS
+    options = "--delete-older-than 10d";
+  };
   # Set the macOS user account
   users.users.${username}.name = username;
   users.users.${username}.home = "/Users/${username}";
@@ -15,10 +22,9 @@
   # Enable Homebrew integration (optional)
   programs.homebrew.enable = true;
 
-  # Set the default shell to Fish (must be installed via Home Manager or system)
-  programs.fish.enable = true;
-  # This makes the fish shell the default login shell.
-  users.users.${username}.shell = pkgs.fish;
+  # Set the default shell to bash
+  # This makes bash the default login shell.
+  users.users.${username}.shell = pkgs.bash;
 
   # 3. Home Manager Integration (Points to same user-level configuration)
   home-manager.users.${username} = {

@@ -31,7 +31,7 @@
   users.users.${username} = {
     isNormalUser = true; #
     extraGroups = [ "wheel" "networkmanager" ];
-    shell = pkgs.fish; # Use fish as the default shell (it's in your packages list)
+    shell = pkgs.bash; # Use bash as the default shell
   };
 
   # 7. Home Manager Integration (Points to user-level configuration)
