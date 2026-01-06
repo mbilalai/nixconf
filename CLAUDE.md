@@ -107,7 +107,6 @@ pkgs.unstable.package-name
 - **XDG portals**: COSMIC-specific portal with GTK fallback
 - **COSMIC apps**: Latest applications from unstable channel
 - **Optimizations**: Native Wayland, hardware acceleration, performance tuned
-- **Authentication**: Fingerprint support for COSMIC greeter
 - **Services**: VirtualBox, Docker, Mullvad VPN, and Tailscale
 - **Hardware config**: `hosts/alpha/hardware-configuration.nix`
 

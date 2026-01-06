@@ -3,11 +3,9 @@
 {
   programs.git = {
     enable = true;
-    settings = {
-      user = {
-        name = "mbilalai";
-        email = "mbilalai@protonmail.ch";
-      };
+    userName = "mbilalai";
+    userEmail = "mbilalai@protonmail.ch";
+    extraConfig = {
       init.defaultBranch = "main";
       core.editor = "helix";
     };
