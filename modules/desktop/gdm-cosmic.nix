@@ -21,7 +21,17 @@
   services.fprintd.enable = true;
   services.fprintd.tod.enable = true;
   services.fprintd.tod.driver = pkgs.libfprint-2-tod1-goodix;
-  security.pam.services.cosmic-greeter.fprintAuth = true;  # COSMIC greeter support
+  
+  # Enable fingerprint authentication for various services
+  security.pam.services = {
+    cosmic-greeter.fprintAuth = true;    # COSMIC greeter support
+    login.fprintAuth = true;             # Console login
+    su.fprintAuth = true;                # su command
+    sudo.fprintAuth = true;              # sudo command
+    polkit-1.fprintAuth = true;          # PolicyKit (for GUI authentication)
+    gdm.fprintAuth = true;               # Fallback display manager
+    lightdm.fprintAuth = true;           # Alternative display manager
+  };
 
   # 4. COSMIC-specific Environment Variables
   environment.sessionVariables = {
@@ -38,7 +48,16 @@
     GDK_BACKEND = "wayland,x11";            # GTK applications prefer Wayland
     SDL_VIDEODRIVER = "wayland";            # SDL applications use Wayland
     _JAVA_AWT_WM_NONREPARENTING = "1";      # Fix Java applications
+    
+    # Enable biometric authentication for browsers and apps
+    WEBKIT_DISABLE_COMPOSITING_MODE = "0";  # Enable hardware acceleration for WebKit
   };
+
+  # Enable PolicyKit for GUI applications to use fingerprint authentication
+  security.polkit.enable = true;
+  
+  # Enable D-Bus services for biometric authentication
+  services.dbus.packages = [ pkgs.fprintd ];
 
   # 5. Additional COSMIC Applications (from stable/unstable packages)
   environment.systemPackages = with pkgs; [
