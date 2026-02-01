@@ -97,6 +97,7 @@
           ./modules/system/default.nix
           ./modules/desktop/gdm-cosmic.nix
           ./modules/system/packages.nix
+          ./modules/system/lid-display-switch.nix
 
           home-manager.nixosModules.home-manager
         ];

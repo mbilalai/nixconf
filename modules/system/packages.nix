@@ -4,6 +4,7 @@
 {
   environment.systemPackages = with pkgs; [ #
     # Editors and Shells
+    neovim
     vim
     helix
     zed-editor
@@ -45,6 +46,7 @@
     docker
     mujoco
     pkgs.nur.repos.Ev357.helium
+    spotify
     # Shell Utilities
     zoxide
     neofetch
@@ -62,6 +64,7 @@
     # Media and Graphics
     ffmpeg
     imagemagick
+    steam
     # Python Development (Astral ecosystem)
     uv      # Fast Python package installer and resolver
     ruff    # Fast Python linter and formatter

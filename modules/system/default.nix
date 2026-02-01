@@ -46,4 +46,21 @@
     enable = true;
     polkitPolicyOwners = [ "alpha" ];  # Allow GUI polkit authentication
   };
+
+  # Laptop lid handling and display management for external monitor switching
+  services.logind = {
+    lidSwitch = "ignore";  # Don't suspend on lid close, handle manually
+    lidSwitchExternalPower = "ignore";  # Same when on external power
+    powerKey = "suspend";  # Power button still suspends
+    extraConfig = ''
+      HandleLidSwitchDocked=ignore
+      IdleAction=ignore
+    '';
+  };
+
+  # Required packages for display management
+  environment.systemPackages = with pkgs; [
+    wlr-randr  # Wayland display configuration tool
+    jq         # JSON processing for scripts
+  ];
 }
