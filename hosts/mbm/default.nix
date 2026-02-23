@@ -12,6 +12,7 @@ in
     vim
     helix
     claude-code
+    opencode
 
     rust-analyzer
     cargo

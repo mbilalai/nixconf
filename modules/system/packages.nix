@@ -9,6 +9,7 @@
     helix
     zed-editor
     claude-code
+    opencode
     # Development Tools
     rust-analyzer
     cargo

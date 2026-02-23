@@ -12,8 +12,8 @@ in
     # Editors and Development
     vim
     helix
-    # zed-editor  # Removed - builds from source, takes too long on aarch64-darwin
     claude-code
+    opencode
 
     # Rust toolchain
     rust-analyzer
