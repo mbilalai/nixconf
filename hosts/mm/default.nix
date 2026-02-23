@@ -9,8 +9,8 @@ in
     ../../modules/darwin/system.nix
   ];
 
-  networking.computerName = "mbs";
-  networking.hostName = "mbs";
+  networking.computerName = "mm";
+  networking.hostName = "mm";
 
   nix = {
     enable = false;

@@ -31,7 +31,7 @@
 
     username = "alpha";
 
-    darwinHosts = [ "mba" "mbp" "mbm" "mbs" ];
+    darwinHosts = [ "mba" "mbp" "mm" "ms" ];
     nixosHosts = [ "alpha" "lap" "tb" "box" ];
 
     mkPkgs = system:
