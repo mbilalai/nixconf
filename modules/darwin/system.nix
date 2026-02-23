@@ -6,11 +6,6 @@
   # System-wide settings
   system = {
     defaults = {
-      # Menu bar
-      menuBar = {
-        autohide = true;
-      };
-
       # Dock settings
       dock = {
         autohide = true;
