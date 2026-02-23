@@ -3,38 +3,48 @@
 {
   programs.bash = {
     enable = true;
-    bashrcExtra = ''
-      # Custom bash configuration
-      export EDITOR="hx"
-      
-      # Aliases
-      alias ll='ls -la'
-      alias la='ls -A'
-      alias l='ls -CF'
-      alias grep='grep --color=auto'
-      alias fgrep='fgrep --color=auto'
-      alias egrep='egrep --color=auto'
-      
-      # History settings
-      export HISTCONTROL=ignoreboth
-      export HISTSIZE=1000
-      export HISTFILESIZE=2000
+
+    initExtra = ''
+      # Initialize zoxide
+      eval "$(zoxide init bash)"
+
+      # Initialize starship prompt
+      eval "$(starship init bash)"
+
+      # Initialize atuin
+      eval "$(atuin init bash)"
+
+      # Nix rebuild functions
+      ndr() {
+        local host="$1"
+        if [ -z "$host" ]; then host="mba"; fi
+        sudo ~/.nix-profile/bin/darwin-rebuild switch --flake "/Users/mbk/nixconf#$host"
+      }
+
+      nrs() {
+        local host="$1"
+        if [ -z "$host" ]; then host="alpha"; fi
+        sudo nixos-rebuild switch --flake "/Users/mbk/nixconf#$host"
+      }
     '';
-    
-    # Set bash as the default shell for Home Manager
+
     shellAliases = {
-      # Git aliases
+      ndr = "ndr mba";
+      nrs = "nrs alpha";
+      nfu = "nix flake update";
+      nfc = "nix flake check";
+
+      ll = "ls -lah";
+      la = "ls -A";
+
+      g = "git";
       gs = "git status";
-      ga = "git add";
+      gd = "git diff";
       gc = "git commit";
       gp = "git push";
-      gl = "git log --oneline";
-      
-      # System aliases
-      rebuild-nixos = "sudo nixos-rebuild switch --flake .#alpha";
-      rebuild-darwin = "darwin-rebuild switch --flake .#macbook";
-      update-flake = "nix flake update";
-      check-flake = "nix flake check";
+      gl = "git pull";
     };
+
+    historySize = 10000;
   };
 }
