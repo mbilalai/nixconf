@@ -19,6 +19,7 @@
       eval "$(starship init zsh)"
       eval "$(atuin init zsh)"
 
+      unalias ndr 2>/dev/null
       ndr() {
         local host="$1"
         if [ -z "$host" ]; then host="mba"; fi

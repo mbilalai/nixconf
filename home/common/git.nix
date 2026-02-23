@@ -3,17 +3,17 @@
 {
   programs.git = {
     enable = true;
-    userName = "mbilalai";
-    userEmail = "mbilalai@protonmail.ch";
-    extraConfig = {
+    settings = {
+      user = {
+        name = "mbilalai";
+        email = "mbilalai@protonmail.ch";
+      };
       init.defaultBranch = "main";
       core.editor = "vim";
       core.sshCommand = "ssh -o AddKeysToAgent=yes";
     };
 
     lfs.enable = true;
-
-    difftastic.enable = true;
 
     ignores = [
       ".DS_Store"
@@ -29,8 +29,14 @@
     };
   };
 
+  programs.difftastic = {
+    enable = true;
+    git.enable = true;
+  };
+
   programs.ssh = {
     enable = true;
+    enableDefaultConfig = false;
     matchBlocks = {
       "github.com" = {
         host = "github.com";
