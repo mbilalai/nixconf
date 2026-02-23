@@ -1,22 +1,48 @@
 # Aerospace configuration
-# Workspaces automatically migrate between monitors
+# Workspaces 1-6: external monitor
+# Workspaces 0, 7-9: builtin monitor
+# Workspaces migrate automatically when monitors connect/disconnect
 
 [global]
 follow-on-focus = true
 float-zero-size = 100x100
 
 [bind]
-# Workspace navigation
-bind = [{ key = "N", mod = "cmd.shift", command = "workspace", args = "+1" }]
-bind = [{ key = "P", mod = "cmd.shift", command = "workspace", args = "-1" }]
+# Switch workspace (Opt + number)
+bind = [{ key = "1", mod = "opt", command = "workspace", args = "1" }]
+bind = [{ key = "2", mod = "opt", command = "workspace", args = "2" }]
+bind = [{ key = "3", mod = "opt", command = "workspace", args = "3" }]
+bind = [{ key = "4", mod = "opt", command = "workspace", args = "4" }]
+bind = [{ key = "5", mod = "opt", command = "workspace", args = "5" }]
+bind = [{ key = "6", mod = "opt", command = "workspace", args = "6" }]
+bind = [{ key = "7", mod = "opt", command = "workspace", args = "7" }]
+bind = [{ key = "8", mod = "opt", command = "workspace", args = "8" }]
+bind = [{ key = "9", mod = "opt", command = "workspace", args = "9" }]
+bind = [{ key = "0", mod = "opt", command = "workspace", args = "0" }]
 
-# Move focused window to workspace
-bind = [{ key = "N", mod = "cmd.ctrl", command = "send-to-workspace", args = "+1" }]
-bind = [{ key = "P", mod = "cmd.ctrl", command = "send-to-workspace", args = "-1" }]
+# Move window to workspace (Opt + Shift + number)
+bind = [{ key = "1", mod = "opt.shift", command = "send-to-workspace", args = "1" }]
+bind = [{ key = "2", mod = "opt.shift", command = "send-to-workspace", args = "2" }]
+bind = [{ key = "3", mod = "opt.shift", command = "send-to-workspace", args = "3" }]
+bind = [{ key = "4", mod = "opt.shift", command = "send-to-workspace", args = "4" }]
+bind = [{ key = "5", mod = "opt.shift", command = "send-to-workspace", args = "5" }]
+bind = [{ key = "6", mod = "opt.shift", command = "send-to-workspace", args = "6" }]
+bind = [{ key = "7", mod = "opt.shift", command = "send-to-workspace", args = "7" }]
+bind = [{ key = "8", mod = "opt.shift", command = "send-to-workspace", args = "8" }]
+bind = [{ key = "9", mod = "opt.shift", command = "send-to-workspace", args = "9" }]
+bind = [{ key = "0", mod = "opt.shift", command = "send-to-workspace", args = "0" }]
 
 # Layout commands
 bind = [{ key = "F", mod = "cmd", command = "toggle-fullscreen" }]
 bind = [{ key = "Q", mod = "cmd", command = "close" }]
+
+# Workspace navigation (next/prev)
+bind = [{ key = "N", mod = "opt", command = "workspace", args = "+1" }]
+bind = [{ key = "P", mod = "opt", command = "workspace", args = "-1" }]
+
+# Move focused window to next/prev workspace
+bind = [{ key = "N", mod = "opt.shift", command = "send-to-workspace", args = "+1" }]
+bind = [{ key = "P", mod = "opt.shift", command = "send-to-workspace", args = "-1" }]
 
 [settings]
 validate-config = true
