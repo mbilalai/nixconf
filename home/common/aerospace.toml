@@ -1,0 +1,22 @@
+# Aerospace configuration
+# Workspaces automatically migrate between monitors
+
+[global]
+follow-on-focus = true
+float-zero-size = 100x100
+
+[bind]
+# Workspace navigation
+bind = [{ key = "N", mod = "cmd.shift", command = "workspace", args = "+1" }]
+bind = [{ key = "P", mod = "cmd.shift", command = "workspace", args = "-1" }]
+
+# Move focused window to workspace
+bind = [{ key = "N", mod = "cmd.ctrl", command = "send-to-workspace", args = "+1" }]
+bind = [{ key = "P", mod = "cmd.ctrl", command = "send-to-workspace", args = "-1" }]
+
+# Layout commands
+bind = [{ key = "F", mod = "cmd", command = "toggle-fullscreen" }]
+bind = [{ key = "Q", mod = "cmd", command = "close" }]
+
+[settings]
+validate-config = true
