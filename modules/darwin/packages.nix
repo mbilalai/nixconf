@@ -55,5 +55,6 @@
 
     cacert
     openssl
+    gnupg
   ];
 }

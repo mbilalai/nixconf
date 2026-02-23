@@ -30,7 +30,7 @@
         KeyRepeat = 2;
         NSAutomaticCapitalizationEnabled = false;
         NSAutomaticSpellingCorrectionEnabled = false;
-        _HIHideMenuBar = true; # Auto-hide menu bar
+        _HIHideMenuBar = false; # Auto-hide menu bar
       };
 
       # Trackpad settings

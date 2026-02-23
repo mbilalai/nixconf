@@ -1,5 +1,5 @@
 { config, lib, pkgs, ... }:
 
 {
-  home.file.".aerospace.toml".source = ./aerospace.toml;
+  home.file.".config/aerospace/aerospace.toml".source = ./aerospace.toml;
 }

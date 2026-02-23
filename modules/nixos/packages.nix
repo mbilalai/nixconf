@@ -28,6 +28,7 @@
     libsecret
     cacert
     openssl
+    gnupg
 
     kitty
     alacritty
