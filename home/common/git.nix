@@ -7,7 +7,7 @@
     userEmail = "mbilalai@protonmail.ch";
     extraConfig = {
       init.defaultBranch = "main";
-      core.editor = "helix";
+      core.editor = "vim";
       core.sshCommand = "ssh -o AddKeysToAgent=yes";
     };
 

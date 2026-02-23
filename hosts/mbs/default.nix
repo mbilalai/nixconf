@@ -55,8 +55,8 @@ in
       home = {
         stateVersion = "25.05";
         sessionVariables = {
-          EDITOR = "hx";
-          VISUAL = "hx";
+          EDITOR = "vim";
+          VISUAL = "vim";
         };
       };
     };
