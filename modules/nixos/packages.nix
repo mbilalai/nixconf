@@ -2,8 +2,10 @@
 
 {
   environment.systemPackages = with pkgs; [
+    neovim
     vim
     helix
+    zed-editor
     claude-code
     opencode
 
@@ -18,15 +20,30 @@
 
     wget
     git
-
     brave
-
     _1password-gui
     _1password-cli
 
+    gnome-keyring
+    libsecret
+    cacert
+    openssl
+
     kitty
     alacritty
+    ghostty
     zellij
+
+    arandr
+    xorg.xrandr
+    pwvucontrol
+    qbittorrent
+    syncthing
+    openssh
+    discord
+    docker
+    mujoco
+    spotify
 
     zoxide
     neofetch
@@ -44,16 +61,10 @@
 
     ffmpeg
     imagemagick
-
-    docker
-    openssh
-    syncthing
+    steam
 
     uv
     ruff
     ty
-
-    cacert
-    openssl
   ];
 }
