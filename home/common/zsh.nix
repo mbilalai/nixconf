@@ -8,28 +8,32 @@
     syntaxHighlighting.enable = true;
 
     initContent = ''
-      # Initialize zoxide
       eval "$(zoxide init zsh)"
-
-      # Initialize starship prompt
       eval "$(starship init zsh)"
-
-      # Initialize atuin
       eval "$(atuin init zsh)"
+
+      ndr() {
+        local host="$1"
+        if [ -z "$host" ]; then host="mba"; fi
+        sudo ~/.nix-profile/bin/darwin-rebuild switch --flake "/Users/mbk/nixconf#$host"
+      }
+
+      nrs() {
+        local host="$1"
+        if [ -z "$host" ]; then host="alpha"; fi
+        sudo nixos-rebuild switch --flake "/Users/mbk/nixconf#$host"
+      }
     '';
 
     shellAliases = {
-      # Nix aliases
-      nr = "darwin-rebuild switch --flake ~/.config/nixconf#macbook";
-      nrs = "darwin-rebuild switch --flake ~/.config/nixconf#macbook";
+      ndr = "ndr mba";
+      ndrs = "nrs alpha";
       nfu = "nix flake update";
       nfc = "nix flake check";
 
-      # Common aliases
       ll = "ls -lah";
       la = "ls -A";
 
-      # Git shortcuts
       g = "git";
       gs = "git status";
       gd = "git diff";
