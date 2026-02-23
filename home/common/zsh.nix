@@ -7,6 +7,13 @@
     autosuggestion.enable = true;
     syntaxHighlighting.enable = true;
 
+    loginExtra = ''
+      # Source .zshrc for login shells
+      if [ -f "$HOME/.zshrc" ]; then
+        source "$HOME/.zshrc"
+      fi
+    '';
+
     initContent = ''
       eval "$(zoxide init zsh)"
       eval "$(starship init zsh)"
